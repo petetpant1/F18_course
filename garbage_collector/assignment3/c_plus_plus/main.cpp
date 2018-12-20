@@ -8,7 +8,7 @@ class Node{
 
 	//the number of the insert that created this node
 	protected:
-		int number_of_node;
+		long number_of_node;
 
 	public:
 		virtual void insert_node( ) = 0;	
@@ -20,19 +20,17 @@ class Node{
 class LinkedList_Node : Node {
 
 	LinkedList_Node *next;
-	long i;
 
 	public:
-		LinkedList_Node(int number_of_node, int i) {
+		LinkedList_Node(int number_of_node) {
 			this->number_of_node = number_of_node;
 			this->next = NULL;
-			this->i = i;
 		}
 
 		void insert_node(){
 		
 			if ( this->next == NULL ){
-				this->next = new LinkedList_Node(this->number_of_node+1, this->number_of_node+1);
+				this->next = new LinkedList_Node(this->number_of_node+1);
 			}else{
 				this->next->insert_node();
 			}
@@ -48,8 +46,6 @@ class LinkedList_Node : Node {
 		void print(){
 			cout<< "number of node: "<< this->number_of_node << "\n";
 
-			cout << "anothe number" << this->i << "\n";
-
 			if ( this->next != NULL){
 				this->next->print();
 			}	
@@ -62,15 +58,12 @@ class LinkedList_Node : Node {
 
 int main ( int argc , char* argv[] ) {
 
-	LinkedList_Node *node = new LinkedList_Node(0,0);
+	LinkedList_Node *node = new LinkedList_Node(0);
 	
 	node->insert_node();
 	node->insert_node();
 
 	node->print();
-
-	cout << sizeof(node) << "\n";
-
 
 	return 0;	
 
