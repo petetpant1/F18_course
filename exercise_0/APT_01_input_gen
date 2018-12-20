@@ -1,0 +1,88 @@
+#!/bin/bash
+
+echo "$0"
+echo Advanced Programming Techniques
+
+
+
+# foo=(a b c) // foo is an array variable
+# echo $foo // referencing an array variable without a subscript [] is like referencing the the array with a subscript 0
+# Output: a
+
+#which is the same with
+#foo = (a,b,c)
+# echo ${foo}
+# Output: a
+
+#This is a buffer array for the parameters
+POSITIONAL=()
+
+
+while [[ $# -gt 0 ]]
+do
+
+key=$1
+
+#in most case $key and ${key} are the same, the latter is used to avoid ambiguity
+
+#When you insert double quotes around a variable, you tell the shell to treat its value as a single word, even if it contains whitespaces 
+#So for example 
+
+#var="foo bar"
+#for i in "$var"; do // Expands to 'for i in "foo bar"; do...'
+#    echo $i         //  so only runs the loop once
+#done
+#Output: foo bar
+
+#var="foo bar"
+#for i in $var; do // Expands to 'for i in foo bar; do...'
+#    echo $i       //   so runs the loop twice, once for each argument
+#done
+#Output: foo
+# 	 bar
+	
+
+
+case $key in 
+	-l |--lines)
+	LINES=$2
+	shift
+	shift
+	;;
+	-r | --divisor-range)
+	DIVISOR_RANGE=$2
+	shift
+	shift
+	;;
+	-d | --dividend-range)
+	DIVIDEND_RANGE=$2
+	shift
+	shift
+	;;
+esac
+done
+
+
+# "${POSITIONAL[@]}" is the expretion take the array/buffer with the parameters
+# when set command is followed by -- with arguments (here "${POSITIONAL[@]") then the positional
+# parameters are set to the arguments
+set -- "${POSITIONAL[@]}"
+
+
+echo generating lines = "${LINES}"
+echo dividend range = $DIVIDEND_RANGE
+echo divisor range = $DIVISOR_RANGE
+
+printf "" > input.txt
+
+while [ $LINES -gt 0 ]
+do 
+	i=$(shuf -i 1-$DIVIDEND_RANGE -n 1)
+	b=$(shuf -i 1-$DIVISOR_RANGE -n 1)
+	printf "$i|$b\n" >> input.txt
+	let LINES=$LINES-1
+done
+
+
+
+
