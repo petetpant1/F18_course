@@ -22,7 +22,7 @@ class LinkedList_Node : Node {
 	LinkedList_Node *next;
 
 	public:
-		LinkedList_Node(int number_of_node) {
+		LinkedList_Node(long number_of_node) {
 			this->number_of_node = number_of_node;
 			this->next = NULL;
 		}
@@ -56,6 +56,8 @@ class LinkedList_Node : Node {
 };
 
 
+
+
 int main ( int argc , char* argv[] ) {
 
 	LinkedList_Node *node = new LinkedList_Node(0);
@@ -64,6 +66,9 @@ int main ( int argc , char* argv[] ) {
 	node->insert_node();
 
 	node->print();
+
+	cout << sizeof(*node);
+
 
 	return 0;	
 
